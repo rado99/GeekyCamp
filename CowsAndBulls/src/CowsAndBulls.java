@@ -17,6 +17,7 @@ public class CowsAndBulls {
 		byte type= sc.nextByte();
 		System.out.print("Please select difficulty,greater than 1 and smaller than 10:");
 		size=sc.nextByte();
+		System.out.println(type+" "+size);
 		input=new Strings(type,size);
 		generated=new Strings(type,size);
 		generated.generate();
