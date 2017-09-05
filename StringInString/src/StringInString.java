@@ -7,17 +7,25 @@ public class StringInString {
 int broi=0;
 boolean isReached=false;
 for(int i=0;i<str[0].length();i++){
-	for(int j=0;j<str[1].length();j++){
-		if(broi==(str[1].length())){
+	if(i+broi>str[0].length())
+		break;
+	for(int j=0;j<str[1].length();++j){
+		if(broi>=(str[1].length())){
 			isReached=true;
 			break;	
-		} else
-		if(str[0].charAt(i+broi)==str[1].charAt(broi)){
+		}
+		if(str[1].charAt(j)=='*'){
+			for(int k=1;k<str[0].length()+broi;k++){
+				//if(str[0].charAt())
+			}
+		}
+		else
+		if(str[1].charAt(j)=='?'||str[0].charAt(i+broi)==str[1].charAt(broi)){
 			broi++;
 		}
 		else
-			broi=0;
-		
+			{broi=0;
+	}
 	}
 }
 System.out.println(isReached);
