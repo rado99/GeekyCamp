@@ -1,8 +1,9 @@
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.sql.Statement;
 public class Courses {
-	java.sql.Connection con=connectivity.connectivity();
+	static java.sql.Connection con=connectivity.connectivity();
 private String name;
 private String description;
 private int credits;
@@ -10,6 +11,9 @@ public Courses(String name,String description,int credits){
 	this.name=name;
 	this.description=description;
 	this.credits=credits;
+}
+public Courses(String name){
+	this.name=name;
 }
 public String getName(){
 	return this.name;
@@ -33,23 +37,33 @@ finally{
 	return status;
 }
 }
-public void deleteCourse() throws SQLException{
+public int deleteCourse() throws SQLException{
+	int status=0;
 	con.setAutoCommit(false);
 	PreparedStatement prs;
-	String sql="DELETE FROM coursesStudents WHERE courseId IN(SELECT id from Courses WHERE name=?)";
+	String sql="DELETE FROM CoursesStudents WHERE CourseID IN (SELECT ID FROM Courses WHERE name=? )";
 	prs=con.prepareStatement(sql);
 	prs.setString(1,name);
-	prs.executeUpdate();
+	status+=prs.executeUpdate();
 	sql="DELETE FROM Courses WHERE name=?";
 	prs=con.prepareStatement(sql);
-	prs.executeUpdate();
-try{
-	con.commit();
+	prs.setString(1,name);
+	status+=prs.executeUpdate();
+con.commit();
+con.setAutoCommit(true);
+	return status;
+
 }
-catch(SQLException e){
-	e.printStackTrace();
-	con.rollback();
-}
+public static void printCourses() throws SQLException{
+	Statement st;
+	ResultSet rs;
+	String sql="SELECT * from Courses";
+	st=con.createStatement();
+	rs=st.executeQuery(sql);
+	System.out.println("ID   |  Name:"+"| Description:  |"+"Credits:");
+	while(rs.next()){
+		System.out.println(rs.getString(1)+"|"+rs.getString(2)+"|"+rs.getString(3)+"|"+rs.getString(4));
+	}
 }
 }
 

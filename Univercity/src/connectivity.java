@@ -21,7 +21,7 @@ public static Connection connectivity() {
 				System.out.println("Driver is aplayed");
 			}
 			
-				String path = "jdbc:mysql://localhost:3306/Univercity";
+				String path = "jdbc:mysql://localhost:3306/Univercity?characterEncoding=utf8";
 				String name = "root";
 				String pass = "";
 				Connection con = null;
